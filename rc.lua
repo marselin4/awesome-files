@@ -496,6 +496,15 @@ awful.rules.rules = {
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen
      }
+
+      { rule_any = {
+        floating = true,
+
+    },
+        properties = {
+            placement = awful.placement.centered + awful.placement.no_overlap+awful.placement.no_offscreen
+        }
+
     },
 
     -- Floating clients.
@@ -531,7 +540,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -609,3 +618,14 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("nitrogen --restore")
 awful.spawn.with_shell("/usr/bin/lxqt-policykit-agent")
+
+--Always on top
+client.connect_signal("property::floating", function(c)
+    if not c.fullscreen then
+        if c.floating then
+            c.ontop = true
+        else
+            c.ontop = false
+        end
+    end
+end
