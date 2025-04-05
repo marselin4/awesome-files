@@ -502,6 +502,15 @@ awful.rules.rules = {
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen
      }
+
+      { rule_any = {
+        floating = true,
+
+    },
+        properties = {
+            placement = awful.placement.centered + awful.placement.no_overlap+awful.placement.no_offscreen
+        }
+
     },
 
 
@@ -619,6 +628,9 @@ awful.spawn.with_shell("picom")
 awful.spawn.with_shell("nitrogen --restore")
 awful.spawn.with_shell("/usr/bin/lxqt-policykit-agent")
 
+
+--Always on top
+
 client.connect_signal("property::floating", function(c)
     if not c.fullscreen then
         if c.floating then
@@ -627,4 +639,8 @@ client.connect_signal("property::floating", function(c)
             c.ontop = false
         end
     end
+
 end)
+
+end
+
