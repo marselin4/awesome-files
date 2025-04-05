@@ -48,6 +48,9 @@ end
 --beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 beautiful.init(gears.filesystem.get_configuration_dir() .. "mytheme.lua")
 
+beautiful.notification_max_width = 300
+beautiful.notification_max_height = 100
+
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
 editor = os.getenv("EDITOR") or "vi"
@@ -63,6 +66,7 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
 --    awful.layout.suit.floating,
+	awful.layout.suit.spiral.dwindle,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
@@ -70,7 +74,6 @@ awful.layout.layouts = {
 --    awful.layout.suit.fair,
 --    awful.layout.suit.fair.horizontal,
 --    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
 --    awful.layout.suit.max,
 --    awful.layout.suit.max.fullscreen,
 --    awful.layout.suit.magnifier,
@@ -167,7 +170,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
-    set_wallpaper(s)
+   -- set_wallpaper(s)
 
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
@@ -261,9 +264,9 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+--    awful.button({ }, 3, function () mymainmenu:toggle() end),
+--    awful.button({ }, 4, awful.tag.viewnext),
+--    awful.button({ }, 5, awful.tag.viewprev)
 ))
 -- }}}
 
@@ -318,6 +321,9 @@ globalkeys = gears.table.join(
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
+
+     awful.key({ modkey,	  	 	  }, "r", function () awful.util.spawn("flameshot gui") end,
+              {description = "scrinshit", group = "awesome"}),
 
     awful.key({ modkey,	  	 	  }, "e", function () awful.util.spawn("pcmanfm") end,
               {description = "open file manager", group = "awesome"}),
@@ -507,6 +513,9 @@ awful.rules.rules = {
 
     },
 
+
+
+	
     -- Floating clients.
     { rule_any = {
         instance = {
@@ -554,7 +563,7 @@ awful.rules.rules = {
 client.connect_signal("manage", function (c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
+    if not awesome.startup then awful.client.setslave(c) end
 
     if awesome.startup
       and not c.size_hints.user_position
@@ -619,7 +628,9 @@ awful.spawn.with_shell("picom")
 awful.spawn.with_shell("nitrogen --restore")
 awful.spawn.with_shell("/usr/bin/lxqt-policykit-agent")
 
+
 --Always on top
+
 client.connect_signal("property::floating", function(c)
     if not c.fullscreen then
         if c.floating then
@@ -628,4 +639,8 @@ client.connect_signal("property::floating", function(c)
             c.ontop = false
         end
     end
+
+end)
+
 end
+
