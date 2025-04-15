@@ -66,12 +66,13 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
 --    awful.layout.suit.floating,
-	awful.layout.suit.spiral.dwindle,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
---    awful.layout.suit.fair,
+    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.floating,
+    awful.layout.suit.fair,
 --    awful.layout.suit.fair.horizontal,
 --    awful.layout.suit.spiral,
 --    awful.layout.suit.max,
@@ -101,6 +102,9 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
+
+
+
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -364,6 +368,9 @@ globalkeys = gears.table.join(
     -- Prompt
     awful.key({ modkey },            "d",     function () awful.util.spawn("rofi -show drun -show-icons") end,
               {description = "run prompt", group = "launcher"}),
+
+   awful.key({ modkey },            "m",     function () awful.util.spawn("rofi -show p -modi p:rofi-power-menu") end,
+              {description = "Power Menu", group = "launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
