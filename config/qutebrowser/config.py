@@ -68,8 +68,8 @@ config.set('content.headers.accept_language', '', 'https://matchmaker.krunker.io
 
 c.downloads.location.directory = '~/Downloads'
 
-c.url.default_page = 'https://www.google.com/'
-c.url.start_pages = 'https://www.google.com/'
+c.url.default_page = 'https://startpage.com'
+c.url.start_pages = 'https://startpage.com'
 
 
 
@@ -118,7 +118,7 @@ config.set('content.images', True, 'devtools://*')
 config.set('content.javascript.enabled', True, 'chrome-devtools://*')
 
 
-config.set("colors.webpage.darkmode.enabled", True)
+#config.set("colors.webpage.darkmode.enabled", True)
 
 # Enable JavaScript.
 # Type: Bool
@@ -140,6 +140,9 @@ config.set('content.local_content_can_access_remote_urls', True, 'file:///home/m
 # Type: Bool
 config.set('content.local_content_can_access_file_urls', False, 'file:///home/martin/.local/share/qutebrowser/userscripts/*')
 
+c.content.blocking.method = "both" 
+
+
 c.content.blocking.adblock.lists = [
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/legacy.txt",
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters.txt",
@@ -156,7 +159,10 @@ c.content.blocking.adblock.lists = [
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badlists.txt",
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/quick-fixes.txt",
         "https://github.com/uBlockOrigin/uAssets/raw/master/filters/resource-abuse.txt",
-        "https://github.com/uBlockOrigin/uAssets/raw/master/filters/unbreak.txt"]
+        "https://github.com/uBlockOrigin/uAssets/raw/master/filters/unbreak.txt",
+        "https://easylist.to/easylist/easylist.txt",
+    	"https://easylist.to/easylist/easyprivacy.txt",
+   	"https://secure.fanboy.co.nz/fanboy-annoyance.txt"]
         
         
         
@@ -167,6 +173,6 @@ config.bind("<Ctrl-w>", "hint links kitty -e yotutube-dl {hint-url}")
 
 
 c.url.searchengines = {
-    'DEFAULT':  'https://google.com/search?hl=en&q={}',
+    'DEFAULT':  'https://www.startpage.com/sp/search?query={}',
     'yt':       'https://www.youtube.com/results?search_query={}'
 }
