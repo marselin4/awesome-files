@@ -1,157 +1,82 @@
-/**
- * A floating box version of the paper theme.
- *
- * User: Qball
- * Copyright: Dave Davenport
- */
+@theme "/dev/null"
 
 * {
-    blue:  #0000FF;
-    white: #FFFFFF;
-    black: #000000;
-    grey:  #eeeeee;
-
-    spacing: 2;
-    background-color: #00000000;
-    border-color: #444444FF;
-    anchor: north;
-    location: center;
+	bg: #000000;
+	background-color: @bg;
 }
-window {
-    transparency: "real";
-    background-color: #00000000;
-    border: 0;
-    padding: 0% 0% 1em 0%;
-    x-offset: 0;
-    y-offset: -25%;
+
+
+configuration {
+	show-icons: true;
+		icon-theme: "Papirus";
+	location: 0;
+	font: "JetBrainsMono Nerd Font 12";	
+	display-drun: "Launch:";
+}
+
+window { 
+	width: 35%;
+	transparency: "real";
+	orientation: vertical;
+	border-color: #74adc0;
 }
 
 mainbox {
-    padding: 0px;
-    border: 0;
-    spacing: 2%;
-}
-
-message {
-    border: 2px;
-    padding: 1em;
-    background-color:		@white;
-    text-color: @black;
-}
-
-container {
- 
-
-}
-
-textbox normal {
-    text-color: #002B36FF;
-    padding: 1;
-    border: 1;
+	children: [inputbar, listview];
 }
 
 
-inputbar {
-	children: 			[ prompt, entry ];
-	background-image:               url("img/bf.png");
-	expand:                         true;
-	border-radius:                  0px 0 8px 8px;
-	padding:                        100px 30px 30px 300px;
+// ELEMENT
+// -----------------------------------
+
+element {
+	padding: 4 12;
+	text-color: #FFFFFF;
 }
 
+element selected {
+	background-color: #808080;
+}
 
+element-text {
+	background-color: inherit;
+	text-color: inherit;
+}
+
+element-icon {
+	size: 16 px;
+	background-color: inherit;
+	padding: 0 6 0 0;
+	alignment: vertical;
+}
 
 listview {
-    fixed-height: 1;
-    border: 2px;
-    padding: 1em;
-    reverse: false;
-
-    columns: 1;
-    background-color: @white;
-}
-element {
-    border: 0;
-    padding: 2px;
-    highlight: bold ;
-}
-element-text {
-    background-color: inherit;
-    text-color:       inherit;
-}
-element normal.normal {
-    text-color: #002B36FF;
-    background-color: #F5F5F500;
-}
-element normal.urgent {
-    text-color: #D75F00FF;
-    background-color: #F5F5F5FF;
-}
-element normal.active {
-    text-color: #005F87FF;
-    background-color: #F5F5F5FF;
-}
-element selected.normal {
-    text-color: #F5F5F5FF;
-    background-color: #4271AEFF;
-}
-element selected.urgent {
-    text-color: #F5F5F5FF;
-    background-color: #D75F00FF;
-}
-element selected.active {
-    text-color: #F5F5F5FF;
-    background-color: #005F87FF;
-}
-element alternate.normal {
-    text-color: #002B36FF;
-    background-color: #D0D0D0FF;
-}
-element alternate.urgent {
-    text-color: #D75F00FF;
-    background-color: #D0D0D0FF;
-}
-element alternate.active {
-    text-color: #005F87FF;
-    background-color: #D0D0D0FF;
-}
-scrollbar {
-    border: 0;
-    padding: 0;
-}
-inputbar {
-    spacing: 0;
-    border: 2px;
-    padding: 0.5em 1em;
-    background-color: @grey;
-    index: 0;
-}
-inputbar normal {
-    foreground-color: #002B36FF;
-    background-color: #F5F5F500;
-}
-mode-switcher {
-    border: 2px;
-    padding: 0.5em 1em;
-    background-color: @grey;
-    index: 10;
-}
-button selected {
-    text-color: #4271AEFF;
-}
-inputbar {
-    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
-}
-textbox-prompt-colon {
-    expand:     false;
-    str:        ":";
-    margin:     0px 0.3em 0em 0em ;
-    text-color: var(black);
-}
-error-message {
-    border: 2px;
-    padding: 1em;
-    background-color: #FF8888;
-    text-color: @black;
+	columns: 2;
+	lines: 9;
+	padding: 8 0;
+	fixed-height: true;
+	fixed-columns: true;
+	fixed-lines: true;
+	border: 0 10 6 10;
 }
 
+// INPUT BAR 
+//------------------------------------------------
+
+entry {
+	text-color: #FFFFFF;
+	padding: 10 10 0 0;
+	margin: 0 -2 0 0;
+}
+
+inputbar {
+	background-image: url("~/.config/rofi/img/bf.png", width);
+	padding: 180 0 0;
+	margin: 0 0 0 0;
+} 
+
+prompt {
+	text-color: #FFFFFF;
+	padding: 10 6 0 10;
+	margin: 0 -2 0 0;
+}
