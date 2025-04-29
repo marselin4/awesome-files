@@ -52,7 +52,7 @@ beautiful.notification_max_width = 300
 beautiful.notification_max_height = 100
 
 -- This is used later as the default terminal and editor to run.
-terminal = "kitty"
+terminal = "alacritty"
 editor = os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -552,7 +552,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -644,7 +644,9 @@ awful.spawn.with_shell("picom")
 awful.spawn.with_shell("nitrogen --restore")
 awful.spawn.with_shell("/usr/bin/lxqt-policykit-agent")
 
-
+client.connect_signal("manage", function(c)
+	c.maximized = false
+end)
 
 client.connect_signal("property::floating", function(c)
     if not c.fullscreen then
