@@ -261,7 +261,6 @@ s.mytasklist = awful.widget.tasklist {
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
@@ -511,7 +510,7 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
-		     placement = awful.placement.no_overlap+awful.placement.no_offscreen+awful.placement.centered
+		     placement = awful.placement.no_overlap+awful.placement.no_offscreen
      }
     },
 
@@ -656,4 +655,12 @@ client.connect_signal("property::floating", function(c)
             c.ontop = false
         end
     end
+end)
+
+client.connect_signal("property::minimized", function(c)
+    c.minimized = false
+end)
+
+client.connect_signal("manage", function(c)
+    c.maximized = false
 end)
