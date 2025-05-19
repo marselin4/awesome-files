@@ -52,7 +52,7 @@ beautiful.notification_max_width = 300
 beautiful.notification_max_height = 100
 
 -- This is used later as the default terminal and editor to run.
-terminal = "alacritty"
+terminal = "kitty"
 editor = os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -196,9 +196,11 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen  = s,
-        filter  = awful.widget.taglist.filter.all,
+--        filter  = awful.widget.taglist.filter.all,
+	filter = function (t) return t.selected or #t:clients() > 0 end,
         buttons = taglist_buttons
     }
+
 
     -- Create a tasklist widget
 s.mytasklist = awful.widget.tasklist {
@@ -251,24 +253,23 @@ s.mytasklist = awful.widget.tasklist {
 
     -- Add widgets to the wibox
     s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            mylauncher,
-            s.mytaglist,
-            s.mypromptbox,
-        },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            wibox.widget.systray(),
-            mytextclock,
-            s.mylayoutbox,
-        },
+    layout = wibox.layout.align.horizontal,
+    expand = "none",
+    { -- Left widgets
+        layout = wibox.layout.fixed.horizontal,
+        mylauncher,
+        s.mypromptbox
+    },
+    s.mytaglist, --Middle widget
+    { -- Right widgets
+        layout = wibox.layout.fixed.horizontal,
+        wibox.widget.systray(),
+        mytextclock,
+        s.mylayoutbox
     }
+}
 end)
 -- }}}
-
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
 --    awful.button({ }, 3, function () mymainmenu:toggle() end),
@@ -332,7 +333,7 @@ globalkeys = gears.table.join(
      awful.key({ modkey,	  	 	  }, "r", function () awful.util.spawn("flameshot gui") end,
               {description = "scrinshit", group = "awesome"}),
 
-    awful.key({ modkey,	  	 	  }, "e", function () awful.util.spawn("pcmanfm") end,
+    awful.key({ modkey,	  	 	  }, "e", function () awful.util.spawn("kitty -e yazi") end,
               {description = "open file manager", group = "awesome"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
@@ -510,7 +511,7 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
-		     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+		     placement = awful.placement.centered + awful.placement.no_overlap+awful.placement.no_offscreen
      }
     },
 
@@ -569,6 +570,8 @@ awful.rules.rules = {
         })
     end
 },
+
+
 }
 -- }}}
 
@@ -639,6 +642,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 
 --AUTORUN
+awful.spawn.with_shell("xrandr --output DisplayPort-0 --mode 1920x1080")
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("nitrogen --restore")
 awful.spawn.with_shell("/usr/bin/lxqt-policykit-agent")
@@ -663,4 +667,10 @@ end)
 
 client.connect_signal("manage", function(c)
     c.maximized = false
+end)
+
+client.connect_signal("manage", function(c)
+    if c.class == "dragon-drop" then
+        awful.placement.centered(c)
+    end
 end)
